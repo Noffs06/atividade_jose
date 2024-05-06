@@ -7,7 +7,7 @@ provider "aws" {
 resource "aws_instance" "ec2_instance" {
   ami           = "ami-07caf09b362be10b8"
   instance_type = "t2.micro"
-  subnet_id     = "<subnet_id>" # ID da Subnet
+  subnet_id     = "subnet-0a0183e48b16014c5" # ID da Subnet
   vpc_security_group_ids = ["${aws_security_group.instance_sg.id}"]
 
   key_name = "vockey"
@@ -18,8 +18,8 @@ resource "aws_instance" "ec2_instance" {
               yum install -y docker
               service docker start
               usermod -a -G docker ec2-user
-              docker push <substituir_aqui>/apicontainer:${var.github_sha}
-              docker run -d -p 8080:8080 --name api-container <substituir_aqui>/apicontainer:${var.github_sha}
+              docker push noffs/apicontainer:${var.github_sha}
+              docker run -d -p 8080:8080 --name api-container noffs/apicontainer:${var.github_sha}
               EOF
 
   tags = {
@@ -30,7 +30,7 @@ resource "aws_instance" "ec2_instance" {
 resource "aws_security_group" "instance_sg" {
   name        = "instance_sg-5"
   description = "Allow SSH and HTTP inbound traffic"
-  vpc_id      = "<vpc-id>"
+  vpc_id      = "vpc-034437df4f992b077"
 
   ingress {
     from_port   = 22
